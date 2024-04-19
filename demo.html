@@ -107,14 +107,14 @@ new StarSpark(document.querySelector('#jokealert'), {
     <script>
         $(function(){   
 
-            let element = document.querySelector('#flash')
-            element.addEventListener('click',() => {
-                new StarSpark(element, {
-                    'cycles':1,
-                    'sparksPerCycle':2,
-                    'sparkDuration': 0.25,
-                    'sparkSize': 1.5,
-                    'sparkHTML':'✦',
+            let element = document.querySelector('#flash') // Pick element
+            element.addEventListener('click', function() {
+                new StarSpark(this, {
+                    'cycles': 1, // Number of flashing cycles
+                    'sparksPerCycle': 2, // Sparks per cycle
+                    'sparkDuration': 0.25, // Duration of spark in seconds
+                    'sparkSize': 1.5, // Size multiplier
+                    'sparkHTML': '✦', // innerHTML of spark
                 });
             });
 
