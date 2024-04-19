@@ -90,7 +90,7 @@ new StarSpark(document.querySelector('#jokealert'), {
     'sparksPerCycle': 2,
     'sparkHTML': 'HA',
     'sparkColor':"#0000ff",
-    'infinite':true, // not implemented
+    'infinite':true,
 });
                 </pre>
         </div>
@@ -105,12 +105,13 @@ new StarSpark(document.querySelector('#jokealert'), {
     <script src="/starspark.js"></script>
 
     <script>
-        $(function(){
+        $(function(){   
 
             let element = document.querySelector('#flash')
             element.addEventListener('click',() => {
                 new StarSpark(element, {
-                    'totalDuration': 0.25,
+                    'cycles':1,
+                    'sparksPerCycle':2,
                     'sparkDuration': 0.25,
                     'sparkSize': 1.5,
                     'sparkHTML':'✦',
@@ -120,7 +121,6 @@ new StarSpark(document.querySelector('#jokealert'), {
             $('#glitter').on('click', function () {
                 const element = $(this)[0];
                 new StarSpark(element, {
-                    'totalDuration': 5,
                     'sparkDuration': 0.5,
                 });
             });
@@ -140,19 +140,19 @@ new StarSpark(document.querySelector('#jokealert'), {
 
             
             new StarSpark(document.querySelector('.sparkme'), {
-                'totalDuration': 500,
-                'sparkDuration': 0.2,
-                'sparksPerCycle': 3,
-                'sparkSize': 0.4,
-                'sparkHTML': '⋆',
-
+                'sparkDuration': 0.5,
+                'sparksPerCycle': 2,
+                'delay':0.2,
+                'sparkSize': 1,
+                'infinite': true,
+                'sparkHTML': '✦',
+                'zIndex':'-1',
+                'sparkColor': 'yellow',
                 'overflow': 0,
             });
 
             new StarSpark(document.querySelector('#jokealert'), {
                 'overflow': 0,
-                'totalDuration': 500,
-                'sparkDuration': 0.25,
                 'sparksPerCycle': 2,
                 'sparkHTML': 'HA',
                 'sparkColor':"#0000ff",

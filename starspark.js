@@ -18,6 +18,7 @@ class StarSpark {
             sparkSize: options.sparkSize === undefined ? 0.5 : options.sparkSize,
             sparkColor: options.sparkColor === undefined ? '#ffffff' : options.sparkColor,
             infinite: options.infinite === undefined ? false : options.infinite,
+            cycles: options.cycles === undefined ? null : options.cycles,
         };
         this.sparksContainer = null;
         this.sparks = []; 
@@ -41,6 +42,7 @@ class StarSpark {
 
 
     initialize() {
+        this.fixDuration();
         // Init sparks container
         this.sparksContainer = this.createSparksContainer();
         this.createRandomSparks(20);
@@ -52,14 +54,27 @@ class StarSpark {
         this.animateSparks();
     }
 
-    animateSparks(){
-        console.log("TOTAL DURATION", this.options.totalDuration);
-        console.log("SPARK DURATION", this.options.sparkDuration);
-        console.log("SPARK DELAY", this.options.delay);
-        console.log("TOTAL TIME PER SPARK", this.options.sparkDuration + this.options.delay);
-        let iterations = Math.round(this.options.totalDuration / this.options.sparkDuration + this.options.delay );
-        console.log(iterations);
+    fixDuration(){
+        let cycleTyme = this.options.delay;
+        let newDuration = 0;
+        let oldDuration = this.options.totalDuration;
+        console.log("STARTING DURATION", oldDuration);
         
+        while(newDuration<oldDuration){
+            newDuration+=cycleTyme;
+        }
+        // Fix rounding
+        newDuration*=100;
+        newDuration = Math.floor(newDuration);
+        newDuration/=100;
+        this.options.totalDuration = newDuration;
+        console.log("NEW DURATION", newDuration);
+        
+    }
+
+    animateSparks(){
+        let iterations = Math.round(this.options.totalDuration / this.options.delay );
+        if(this.options.cycles!==null) iterations = this.options.cycles;
         for (let i = 0; i < iterations; i++) {
             for (let j = 0; j < this.options.sparksPerCycle; j++) {
                 window.setTimeout(() => {
@@ -77,7 +92,7 @@ class StarSpark {
             }else{
                 this.sparksContainer.remove();
             }
-        }, this.options.totalDuration * 1000);
+        }, this.options.delay * iterations+1 * 1000);
 
     }
 
