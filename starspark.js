@@ -1,9 +1,9 @@
-// 
+//
 // StarSpark.js
 // Author: Deli Pistacna
-// 
+//
 class StarSpark {
-    
+
     constructor(element, options = {}) {
         this.element = element;
         this.options = {
@@ -21,7 +21,7 @@ class StarSpark {
             cycles: options.cycles === undefined ? null : options.cycles,
         };
         this.sparksContainer = null;
-        this.sparks = []; 
+        this.sparks = [];
         this.sparkAnimationKeyframes = [
             {
                 opacity: 0,
@@ -33,9 +33,9 @@ class StarSpark {
             },
             {
                 opacity: 0,
-                transform: `translateX(-50%) translateY(-50%) rotate(0deg) scale(${this.options.sparkSize*2})`,
+                transform: `translateX(-50%) translateY(-50%) rotate(0deg) scale(${this.options.sparkSize * 2})`,
             },
-            
+
         ];
         this.initialize();
     }
@@ -47,52 +47,52 @@ class StarSpark {
         this.sparksContainer = this.createSparksContainer();
         this.createRandomSparks(20);
         // Alter target
-        this.element.style.display = 'inline-block'
+        // this.element.style.display = 'inline-block'
         this.element.style.position = 'relative'
         // Append
         this.element.append(this.sparksContainer);
         this.animateSparks();
     }
 
-    fixDuration(){
+    fixDuration() {
         let cycleTyme = this.options.delay;
         let newDuration = 0;
         let oldDuration = this.options.totalDuration;
         console.log("STARTING DURATION", oldDuration);
-        
-        while(newDuration<oldDuration){
-            newDuration+=cycleTyme;
+
+        while (newDuration < oldDuration) {
+            newDuration += cycleTyme;
         }
         // Fix rounding
-        newDuration*=100;
+        newDuration *= 100;
         newDuration = Math.floor(newDuration);
-        newDuration/=100;
+        newDuration /= 100;
         this.options.totalDuration = newDuration;
         console.log("NEW DURATION", newDuration);
-        
+
     }
 
-    animateSparks(){
-        let iterations = Math.round(this.options.totalDuration / this.options.delay );
-        if(this.options.cycles!==null) iterations = this.options.cycles;
+    animateSparks() {
+        let iterations = Math.round(this.options.totalDuration / this.options.delay);
+        if (this.options.cycles !== null) iterations = this.options.cycles;
         for (let i = 0; i < iterations; i++) {
             for (let j = 0; j < this.options.sparksPerCycle; j++) {
                 window.setTimeout(() => {
                     const spark = this.sparks[Math.floor(Math.random() * this.sparks.length)];
                     this.animateSpark(spark);
                 }, this.options.delay * i * 1000);
-                
+
             }
         }
 
-        
-        window.setTimeout(()=>{
-            if(this.options.infinite){ 
+
+        window.setTimeout(() => {
+            if (this.options.infinite) {
                 this.animateSparks();
-            }else{
+            } else {
                 this.sparksContainer.remove();
             }
-        }, this.options.delay * iterations+1 * 1000);
+        }, this.options.delay * iterations + 1 * 1000);
 
     }
 
@@ -106,7 +106,7 @@ class StarSpark {
         });
     }
 
-    
+
     // this.options.totalDuration
 
     createSingleSpark() {
@@ -117,6 +117,7 @@ class StarSpark {
         spark.style.left = `${Math.random() * 100}%`;
         spark.style.transform = 'translateX(-50%) translateY(-50%)';
         spark.style.opacity = '0';
+        spark.style.pointerEvents = 'none';
         spark.style.color = this.options.sparkColor;
         spark.style.zIndex = this.options.zIndex;
         this.sparks.push(spark);
@@ -137,7 +138,9 @@ class StarSpark {
         sparks.style.margin = `-${this.options.overflow}px`;
         sparks.style.top = '0px';
         sparks.style.left = '0px';
-        sparks.style.width = `calc(100% + ${this.options.overflow*2}px)`;
+        sparks.style.pointerEvents = 'none';
+
+        sparks.style.width = `calc(100% + ${this.options.overflow * 2}px)`;
         sparks.style.height = `calc(100% + ${this.options.overflow * 2}px)`;
         return sparks;
     }
@@ -179,7 +182,7 @@ function createSparks(count, posx, posy) {
 function sparkme(elem) {
     sparks = createSparks(20)
     sparks.classList.add('sparkContainer');
-    elem.style.display = 'inline-block'
+    // elem.style.display = 'inline-block'
     elem.style.position = 'relative'
     elem.append(sparks);
     window.setTimeout(function () {
@@ -198,18 +201,18 @@ var keyFrames = `
                         transform: translateX(-50%) translateY(-50%) scale(0) rotate(0deg);
                     }
 
-                    
-                    5% { 
+
+                    5% {
                         opacity:1;
                         color:white;
-                        transform: translateX(-50%) translateY(-50%)  scale(0.5) rotate(0deg); 
+                        transform: translateX(-50%) translateY(-50%)  scale(0.5) rotate(0deg);
                     }
-                    
-                    10% { 
+
+                    10% {
                         opacity:0;
                         color:yellow;
                         // Scale 1 or 2
-                        transform: translateX(-50%) translateY(-50%)  scale(2) rotate(0deg); 
+                        transform: translateX(-50%) translateY(-50%)  scale(2) rotate(0deg);
                     }
                     100% {
                         opacity:0;
